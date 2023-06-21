@@ -4,11 +4,9 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { GameEngine } from "react-native-game-engine";
 import GameLoop from "./systems/GameLoop";
 import Entities from "./entities";
-import { useFonts } from "expo-font";
 import Sound from "./Sound";
 
 export default function App() {
-  useFonts({ Oxanium: require("./assets/fonts/Oxanium-Bold.ttf") });
   const [gameEngine, setGameEngine] = useState(null);
   const [running, setRunning] = useState(false);
   const [score, setScore] = useState(0);
@@ -103,9 +101,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     textAlign: "center",
     color: "#374955",
-    fontSize: 16,
-    fontFamily: "Oxanium, cursive",
-    fontWeight: 700,
+    fontSize: 18,
+    fontWeight: "bold",
   },
 
   score: {
@@ -113,7 +110,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     textAlign: "center",
     fontSize: 36,
-    fontFamily: "Oxanium, cursive",
+    fontWeight: "bold",
     color: "#FACF5A",
   },
 });
