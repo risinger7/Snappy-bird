@@ -1,28 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { GameEngine } from 'react-native-game-engine';
-import GameLoop from './systems/GameLoop';
-import Entities from './entities';
+import { StatusBar } from "expo-status-bar";
+import { useState, useEffect, useRef } from "react";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { GameEngine } from "react-native-game-engine";
+import GameLoop from "./systems/GameLoop";
+import Entities from "./entities";
+import { useFonts } from "expo-font";
+import Sound from "./Sound";
+
 export default function App() {
-  
-  const [gameEngine, setGameEngine] = useState(null)
-  const [running, setRunning] = useState(false)
-  const [score, setScore] = useState(0)
-  
+  useFonts({ Oxanium: require("./assets/fonts/Oxanium-Bold.ttf") });
+  const [gameEngine, setGameEngine] = useState(null);
+  const [running, setRunning] = useState(false);
+  const [score, setScore] = useState(0);
+
   function handleStart() {
-    setRunning(true)
-    gameEngine.swap(Entities())
+    setScore(0);
+    setRunning(true);
+    gameEngine.swap(Entities());
   }
 
-  useEffect(() => {
-    setScore(0)
-  }, [])
-  
-
   return (
-    <View style={[styles.container, { backgroundColor: "yellow" }]}>
-      <Text style={{top: 0}}>{score}</Text>
+    <View style={[styles.viewContainer]}>
+      <Text style={styles.score}>{score}</Text>
       <GameEngine
         ref={(ref) => setGameEngine(ref)}
         running={running}
@@ -30,73 +29,91 @@ export default function App() {
         entities={Entities()}
         style={styles.engineStyle}
         onEvent={(e) => {
-          switch(e.type) {
+          switch (e.type) {
             case "GAME_OVER":
-              setRunning(false)
-              setScore(0)
-              break     
+              setRunning(false);
+              break;
             case "INCREASE_SCORE":
-              setScore(score => score + 1)
-              break
-          }     
+              Sound();
+              setScore((score) => score + 1);
+              break;
+          }
         }}
-      >    
-      </GameEngine>
+      ></GameEngine>
       {
-        // not running then show start button
-        !running ?
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.startButton} onPress={handleStart}>
-            <Text style={styles.text}>START GAME</Text>
-          </TouchableOpacity>
-        </View> : null
-      } 
-      <StatusBar hidden={true} />
+        // if not running then show start button
+        !running ? (
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.startButton} onPress={handleStart}>
+              <Text style={styles.buttonText}>START GAME</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null
+      }
+      <StatusBar style="auto" hidden={true} />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-
   engineStyle: {
     position: "absolute",
     left: 0,
     top: 0,
     right: 0,
-    bottom: 0
+    bottom: 0,
   },
 
-  container: {
+  viewContainer: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#374955", // dark blue-grey
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   buttonContainer: {
-    flex: 1,
-    backgroundColor: 'transparent',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-
-    startButton: {
+    backgroundColor: "transparent",
     display: "flex",
     flexDirection: "row",
-    flex: 0,
-    justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "black",
-    width: 100,
-    height: 100,
-    paddingHorizontal: 60,
-    paddingVertical: 40,
-    borderRadius: 5,
+    justifyContent: "center",
+    color: "#FACF5A",
   },
 
-  text: {
-    color: "#fff",
-    fontSize: 22,
+  startButton: {
+    color: "#FACF5A",
+    padding: 20,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#FACF5A",
+    borderStyle: "solid",
+    borderWidth: "4px",
+    borderColor: "#fff",
+    width: 260,
+    height: 140,
+    paddingHorizontal: 60,
+    paddingVertical: 40,
+    borderRadius: 8,
+  },
+
+  buttonText: {
+    display: "flex",
+    flexDirection: "row",
+    textAlign: "center",
+    color: "#374955",
+    fontSize: 16,
+    fontFamily: "Oxanium, cursive",
     fontWeight: 700,
-  }
+  },
+
+  score: {
+    top: 15,
+    position: "absolute",
+    textAlign: "center",
+    fontSize: 36,
+    fontFamily: "Oxanium, cursive",
+    color: "#FACF5A",
+  },
 });
