@@ -1,6 +1,5 @@
 import Matter from "matter-js";
 import Box from "../components/Box";
-import Floor from "../components/Floor";
 import Wall from "../components/Wall";
 import vars from "../vars";
 import { getWalls } from "../utils/random";
@@ -20,14 +19,7 @@ function Entities() {
     50,
     50
   );
-  // floor
-  const floorA = Matter.Bodies.rectangle(
-    vars.MAX_WIDTH / 2,
-    vars.MAX_HEIGHT,
-    vars.MAX_WIDTH,
-    100,
-    { isStatic: true }
-  );
+
   // wall
 
   const pipeA = getWalls();
