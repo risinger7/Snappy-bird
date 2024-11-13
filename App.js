@@ -38,16 +38,13 @@ export default function App() {
           }
         }}
       ></GameEngine>
-      {
-        // if not running then show start button
-        !running ? (
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.startButton} onPress={handleStart}>
-              <Text style={styles.buttonText}>START GAME</Text>
-            </TouchableOpacity>
-          </View>
-        ) : null
-      }
+      {!running ? (
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.startButton} onPress={handleStart}>
+            <Text style={styles.buttonText}>START GAME</Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
       <StatusBar style="auto" hidden={true} />
     </View>
   );

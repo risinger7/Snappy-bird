@@ -5,14 +5,13 @@ import { getWalls } from "../utils/random";
 import { GameEngine } from "react-native-game-engine";
 import vars from "../vars";
 
-// handle updates of entities
-
 export default function GameLoop(entities, { touches, time, dispatch }) {
   let engine = entities.physics.engine;
 
   touches
     .filter((t) => t.type === "press")
     .forEach((t) => {
+      console.log(t);
       const touchX = t.event.changedTouches[0].pageX;
       let xVel = getVelocity(touchX);
       Matter.Body.setVelocity(entities.box.body, {

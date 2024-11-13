@@ -11,17 +11,9 @@ function Entities() {
   engine.gravity.y = vars.GRAVITY;
 
   // creating initial entities
-
   // box
-  const boxA = Matter.Bodies.rectangle(
-    vars.MAX_WIDTH / 2,
-    vars.MAX_HEIGHT / 2,
-    50,
-    50
-  );
-
+  const boxA = Matter.Bodies.rectangle(200, vars.MAX_HEIGHT / 2, 50, 50);
   // wall
-
   const pipeA = getWalls();
   const wallLeft1 = Matter.Bodies.rectangle(
     pipeA.pipeLeft.pos.x,
@@ -74,7 +66,7 @@ function Entities() {
     wallLeft1: {
       world,
       body: wallLeft1,
-      color: "#F95959", // F95959
+      color: "#F95959",
       renderer: <Wall />,
     },
     wallRight1: {
