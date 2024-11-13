@@ -1,3 +1,3 @@
-# Snappy bird
+# Snappy block
 
-A flappy bird style game created in React-native and Matter.js.
+A game inspired by flappy-bird created in React-native and Matter.js.
